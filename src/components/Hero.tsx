@@ -1,10 +1,10 @@
-import { Search, MapPin, ArrowDown } from "lucide-react";
+import { Search, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import heroImg from "@/assets/hero-stores.jpg";
 
 const Hero = () => {
   return (
-    <section id="home" className="relative min-h-[90vh] flex items-center pt-16 overflow-hidden">
-      {/* Background image */}
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
       <div className="absolute inset-0">
         <img src={heroImg} alt="Vibrant neighborhood stores" className="w-full h-full object-cover" width={1920} height={800} />
         <div className="absolute inset-0 bg-gradient-to-b from-foreground/70 via-foreground/50 to-background" />
@@ -28,26 +28,22 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="#stores"
+            <Link
+              to="/stores"
               className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 rounded-xl text-lg font-semibold hover:opacity-90 transition-opacity shadow-lg"
             >
               <Search className="w-5 h-5" />
               Browse Stores
-            </a>
-            <a
-              href="#add-store"
+            </Link>
+            <Link
+              to="/add-store"
               className="inline-flex items-center justify-center gap-2 bg-card/90 backdrop-blur-sm text-foreground px-8 py-3.5 rounded-xl text-lg font-semibold hover:bg-card transition-colors shadow-lg border border-border"
             >
               <MapPin className="w-5 h-5" />
               Add a Store
-            </a>
+            </Link>
           </div>
         </div>
-
-        <a href="#stores" className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-primary-foreground/60 hover:text-primary-foreground transition-colors">
-          <ArrowDown className="w-8 h-8" />
-        </a>
       </div>
     </section>
   );

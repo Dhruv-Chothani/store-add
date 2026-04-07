@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+/* leaflet CSS loaded via index.html <link> tag */
 
 @layer base {
   :root {
@@ -70,4 +70,33 @@
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(25 95% 53%), hsl(35 95% 55%));
   }
+}
+
+/* Ensure leaflet map renders properly */
+.leaflet-container {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.leaflet-control-zoom {
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.leaflet-control-zoom a {
+  background: hsl(var(--card)) !important;
+  color: hsl(var(--foreground)) !important;
+  border-bottom: 1px solid hsl(var(--border)) !important;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+.leaflet-popup-tip {
+  box-shadow: none !important;
 }

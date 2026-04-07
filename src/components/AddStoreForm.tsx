@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { MapPin, Plus, Locate } from "lucide-react";
 import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import { useStores } from "@/context/StoreContext";
 import { StoreType, storeTypeLabels } from "@/types/store";
 import { useToast } from "@/components/ui/use-toast";
@@ -34,7 +35,8 @@ const AddStoreForm = () => {
     if (!containerRef.current || mapRef.current) return;
     const map = L.map(containerRef.current).setView([form.lat, form.lng], 13);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; OpenStreetMap',
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 19,
     }).addTo(map);
 
     const marker = L.marker([form.lat, form.lng], { draggable: true }).addTo(map);
@@ -50,6 +52,8 @@ const AddStoreForm = () => {
 
     mapRef.current = map;
     markerRef.current = marker;
+
+    setTimeout(() => map.invalidateSize(), 200);
 
     return () => { map.remove(); mapRef.current = null; };
   }, []);
@@ -73,10 +77,7 @@ const AddStoreForm = () => {
       toast({ title: "Please fill in store name and address", variant: "destructive" });
       return;
     }
-    addStore({
-      ...form,
-      image: storeImages[form.type],
-    });
+    addStore({ ...form, image: storeImages[form.type] });
     toast({ title: "🎉 Store added successfully!" });
     setForm({ name: "", type: "general", description: "", address: "", phone: "", lat: 28.6139, lng: 77.209 });
   };
@@ -85,7 +86,7 @@ const AddStoreForm = () => {
     "w-full px-4 py-3 rounded-xl border border-border bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow";
 
   return (
-    <section id="add-store" className="py-20">
+    <section className="py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
@@ -97,73 +98,49 @@ const AddStoreForm = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-          {/* Form fields */}
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-semibold text-foreground mb-1.5">Store Name *</label>
               <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="e.g. Kumar General Store" className={inputClass} />
             </div>
-
             <div>
               <label className="block text-sm font-semibold text-foreground mb-1.5">Store Type</label>
-              <select
-                value={form.type}
-                onChange={(e) => setForm({ ...form, type: e.target.value as StoreType })}
-                className={inputClass}
-              >
+              <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value as StoreType })} className={inputClass}>
                 {Object.entries(storeTypeLabels).map(([val, label]) => (
                   <option key={val} value={val}>{label}</option>
                 ))}
               </select>
             </div>
-
             <div>
               <label className="block text-sm font-semibold text-foreground mb-1.5">Description</label>
-              <textarea
-                value={form.description}
-                onChange={(e) => setForm({ ...form, description: e.target.value })}
-                placeholder="Tell people about your store..."
-                rows={3}
-                className={inputClass + " resize-none"}
-              />
+              <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Tell people about your store..." rows={3} className={inputClass + " resize-none"} />
             </div>
-
             <div>
               <label className="block text-sm font-semibold text-foreground mb-1.5">Address *</label>
               <input value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} placeholder="Full address" className={inputClass} />
             </div>
-
             <div>
               <label className="block text-sm font-semibold text-foreground mb-1.5">Phone</label>
               <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+91 98765 43210" className={inputClass} />
             </div>
-
-            <button
-              type="submit"
-              className="w-full bg-primary text-primary-foreground py-3.5 rounded-xl font-semibold text-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg"
-            >
+            <button type="submit" className="w-full bg-primary text-primary-foreground py-3.5 rounded-xl font-semibold text-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg">
               <Plus className="w-5 h-5" />
               Add Store to Map
             </button>
           </div>
 
-          {/* Map picker */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-primary" />
                 Pick Location on Map
               </label>
-              <button
-                type="button"
-                onClick={handleCurrentLocation}
-                className="text-sm text-primary hover:underline flex items-center gap-1 font-medium"
-              >
+              <button type="button" onClick={handleCurrentLocation} className="text-sm text-primary hover:underline flex items-center gap-1 font-medium">
                 <Locate className="w-4 h-4" />
                 Use My Location
               </button>
             </div>
-            <div ref={containerRef} className="w-full h-[360px] rounded-xl overflow-hidden border border-border shadow-md" />
+            <div ref={containerRef} className="w-full h-[360px] rounded-xl overflow-hidden border border-border shadow-md" style={{ zIndex: 1 }} />
             <p className="text-xs text-muted-foreground text-center">
               📍 Lat: {form.lat.toFixed(4)}, Lng: {form.lng.toFixed(4)}
             </p>
