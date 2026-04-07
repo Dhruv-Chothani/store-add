@@ -1,11 +1,10 @@
 import { Store, MapPin, Mail } from "lucide-react";
-import { Link } from "react-router-dom";
 
 const quickLinks = [
-  { label: "Home", to: "/" },
-  { label: "Stores", to: "/stores" },
-  { label: "Map", to: "/map" },
-  { label: "Add Store", to: "/add-store" },
+  { label: "Home", href: "#home" },
+  { label: "Stores", href: "#stores" },
+  { label: "Map", href: "#map" },
+  { label: "Add Store", href: "#add-store" },
 ];
 
 const Footer = () => (
@@ -28,9 +27,9 @@ const Footer = () => (
           <h4 className="font-semibold text-primary-foreground mb-3">Quick Links</h4>
           <div className="space-y-2">
             {quickLinks.map((l) => (
-              <Link key={l.to} to={l.to} className="block text-sm hover:text-primary transition-colors">
+              <a key={l.href} href={l.href} className="block text-sm hover:text-primary transition-colors">
                 {l.label}
-              </Link>
+              </a>
             ))}
           </div>
         </div>

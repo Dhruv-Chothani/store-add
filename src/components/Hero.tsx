@@ -1,5 +1,4 @@
 import { Search, MapPin } from "lucide-react";
-import { Link } from "react-router-dom";
 import heroImg from "@/assets/hero-stores.jpg";
 
 const Hero = () => {
@@ -28,20 +27,20 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/stores"
+            <a
+              href="#stores"
               className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 rounded-xl text-lg font-semibold hover:opacity-90 transition-opacity shadow-lg"
             >
               <Search className="w-5 h-5" />
               Browse Stores
-            </Link>
-            <Link
-              to="/add-store"
+            </a>
+            <a
+              href="#add-store"
               className="inline-flex items-center justify-center gap-2 bg-card/90 backdrop-blur-sm text-foreground px-8 py-3.5 rounded-xl text-lg font-semibold hover:bg-card transition-colors shadow-lg border border-border"
             >
               <MapPin className="w-5 h-5" />
               Add a Store
-            </Link>
+            </a>
           </div>
         </div>
       </div>
