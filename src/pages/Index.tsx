@@ -24,10 +24,16 @@ const Index = () => {
     <StoreProvider>
       <div className="min-h-screen">
         <Navbar />
-        <Hero />
-        <StoreList onLocate={handleLocateStore} />
+        <section id="home">
+          <Hero />
+        </section>
+        <section id="stores">
+          <StoreList onLocate={handleLocateStore} />
+        </section>
         <MapView ref={mapViewRef} />
-        <AddStoreForm />
+        <section id="add-store">
+          <AddStoreForm />
+        </section>
         <Footer />
         <ScrollToTop />
       </div>
