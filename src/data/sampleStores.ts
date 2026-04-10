@@ -54,7 +54,7 @@ export const sampleStores: Store[] = [
     name: "Old Town Scrap Yard",
     type: "scrape",
     description: "Largest scrap collection center. We accept metal, paper, plastic, and electronic waste.",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=400&fit=crop",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2SVSebFKz-DdnPJEKiao-cHddL9bAjmR31w&s",
     lat: 28.6508,
     lng: 77.2334,
     address: "90 Recycling Road, New Delhi",
